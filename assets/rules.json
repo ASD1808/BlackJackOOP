@@ -1,0 +1,7 @@
+{
+  "min_bet": 10,
+  "max_bet": 500,
+  "dealer_stand_on": 17,
+  "blackjack_payout": 1.5,
+  "starting_balance": 1000
+}

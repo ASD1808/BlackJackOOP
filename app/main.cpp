@@ -1,54 +1,75 @@
+#include "Game.h"
 #include <iostream>
-#include <array>
-#include "Example.h"
+#include <string>
 
 int main() {
-    std::cout << "Hello, world!\n";
-    Example e1;
-    e1.add(3);
-    e1.g();
-    std::array<int, 100> v{};
-    int nr;
-    std::cout << "Introduceți nr: ";
-    /////////////////////////////////////////////////////////////////////////
-    /// Observație: dacă aveți nevoie să citiți date de intrare de la tastatură,
-    /// dați exemple de date de intrare folosind fișierul tastatura.txt
-    /// Trebuie să aveți în fișierul tastatura.txt suficiente date de intrare
-    /// (în formatul impus de voi) astfel încât execuția programului să se încheie.
-    /// De asemenea, trebuie să adăugați în acest fișier date de intrare
-    /// pentru cât mai multe ramuri de execuție.
-    /// Dorim să facem acest lucru pentru a automatiza testarea codului, fără să
-    /// mai pierdem timp de fiecare dată să introducem de la zero aceleași date de intrare.
-    ///
-    /// Pe GitHub Actions (bife), fișierul tastatura.txt este folosit
-    /// pentru a simula date introduse de la tastatură.
-    /// Bifele verifică dacă programul are erori de compilare, erori de memorie și memory leaks.
-    ///
-    /// Dacă nu puneți în tastatura.txt suficiente date de intrare, îmi rezerv dreptul să vă
-    /// testez codul cu ce date de intrare am chef și să nu pun notă dacă găsesc vreun bug.
-    /// Impun această cerință ca să învățați să faceți un demo și să arătați părțile din
-    /// program care merg (și să le evitați pe cele care nu merg).
-    ///
-    /////////////////////////////////////////////////////////////////////////
-    std::cin >> nr;
-    /////////////////////////////////////////////////////////////////////////
-    for(int i = 0; i < nr; ++i) {
-        std::cout << "v[" << i << "] = ";
-        std::cin >> v[i];
+    try {
+        std::string playerName;
+        std::cout << "Enter player name: ";
+        if (!(std::cin >> playerName)) {
+            playerName = "Player1";
+        }
+
+        Game game(playerName);
+        std::cout << "Welcome, " << game.getPlayer().getName() << "!\n";
+        std::cout << "Table limits: " << game.getMinBet() << " - " << game.getMaxBet() << "\n";
+
+        while (game.getPlayer().getBalance() >= game.getMinBet()) {
+            std::cout << "\nCurrent balance: " << game.getPlayer().getBalance() << "\n";
+            std::cout << "Enter bet amount (or 0 to quit): ";
+
+            double bet = 0.0;
+            if (!(std::cin >> bet) || bet == 0.0) {
+                break;
+            }
+
+            if (!game.startRound(bet)) {
+                std::cout << game.getLastOutcome() << "\n";
+                continue;
+            }
+
+            while (game.isRoundActive()) {
+                std::cout << "\n" << game << "\n";
+                std::cout << "Current bet: " << game.getPlayer().getCurrentBet() << "\n";
+                std::cout << "Choose action - (h)it or (s)tand: ";
+
+                char action = 's';
+                if (!(std::cin >> action)) {
+                    action = 's';
+                }
+
+                if (action == 'h' || action == 'H') {
+                    game.playerHit();
+                } else if (action == 's' || action == 'S') {
+                    game.playerStand();
+                } else {
+                    std::cout << "Invalid choice. Please enter 'h' or 's'.\n";
+                }
+            }
+
+            std::cout << "\n" << game << "\n";
+            std::cout << "Result: " << game.getLastOutcome() << "\n";
+        }
+
+        if (game.getPlayer().getHand().getCount() > 0) {
+            const Card& firstCard = game.getPlayer().getHand().getCard(0);
+            std::cout << "\nLast round first card: " << firstCard.getRank()
+                      << " (" << firstCard.getSuit() << ")\n";
+
+            Hand copiedHand(game.getPlayer().getHand());
+            Hand assignedHand;
+            assignedHand = copiedHand;
+            std::cout << "Hand copy check: " << assignedHand << "\n";
+        }
+
+        std::cout << "Deck empty: " << (game.getDeck().isEmpty() ? "yes" : "no") << "\n";
+        std::cout << "Final balance for " << game.getPlayer().getName()
+                  << ": " << game.getPlayer().getBalance() << "\n";
+
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << "\n";
+        return 1;
     }
-    std::cout << "\n\n";
-    std::cout << "Am citit de la tastatură " << nr << " elemente:\n";
-    for(int i = 0; i < nr; ++i) {
-        std::cout << "- " << v[i] << "\n";
-    }
-    ///////////////////////////////////////////////////////////////////////////
-    /// Pentru date citite din fișier, NU folosiți tastatura.txt. Creați-vă voi
-    /// alt fișier propriu cu ce alt nume doriți.
-    /// Exemplu:
-    /// std::ifstream fis("date.txt");
-    /// for(int i = 0; i < nr2; ++i)
-    ///     fis >> v2[i];
-    ///
-    ///////////////////////////////////////////////////////////////////////////
+
     return 0;
 }

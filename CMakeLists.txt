@@ -31,24 +31,21 @@ include(cmake/RegisterTests.cmake)
 
 # External dependencies with FetchContent
 
-# include(FetchContent)
-#
-# set(FETCHCONTENT_QUIET OFF CACHE INTERNAL "Override verbose output" FORCE)
-# set(FETCHCONTENT_UPDATES_DISCONNECTED ON CACHE INTERNAL "Override update strategy" FORCE)
-#
-# NOTE: Also update env vars used for caching in
-#     - .github/actions/configure-cmake/action.yml
-#     - .github/workflows/cmake.yml
-# FetchContent_Declare(
-#     SomeLib
-#     SYSTEM         # keeps ext libs out of static code analysis
-#     GIT_REPOSITORY https://github.com/<SomeUser>/<SomeLib>.git
-#     GIT_TAG        <some_git_hash> # <which tag/branch @ <some_date>>
-#     GIT_SHALLOW    1  # works only with branches or tags, not with arbitrary commit hashes
-#     GIT_PROGRESS   ON
-# )
-#
-# FetchContent_MakeAvailable(SomeLib)
+include(FetchContent)
+
+set(FETCHCONTENT_QUIET OFF CACHE INTERNAL "Override verbose output" FORCE)
+set(FETCHCONTENT_UPDATES_DISCONNECTED ON CACHE INTERNAL "Override update strategy" FORCE)
+
+FetchContent_Declare(
+        nlohmann_json
+        SYSTEM
+        GIT_REPOSITORY https://github.com/nlohmann/json.git
+        GIT_TAG        v3.11.3
+        GIT_SHALLOW    1
+        GIT_PROGRESS   ON
+)
+
+FetchContent_MakeAvailable(nlohmann_json)
 
 ###############################################################################
 
@@ -61,7 +58,12 @@ include(cmake/RegisterTests.cmake)
 # Configure sources
 
 # always STATIC (simpler); TBD if we ever want dynamic for this; BUILD_SHARED_LIBS is for ext deps
-add_library(${MAIN_LIBRARY_NAME} STATIC)
+add_library(${MAIN_LIBRARY_NAME} STATIC
+        src/Card.cpp
+        src/Hand.cpp
+        src/Deck.cpp
+        src/Player.cpp
+        src/Game.cpp)
 
 # NOTE: update EXECUTABLE_NAME in .github/workflows/cmake.yml when changing name here
 add_executable(${MAIN_EXECUTABLE_NAME}
@@ -104,6 +106,7 @@ target_include_directories(${MAIN_LIBRARY_NAME} SYSTEM PRIVATE
 ###############################################################################
 
 # Link libraries
+target_link_libraries(${MAIN_LIBRARY_NAME} PRIVATE nlohmann_json::nlohmann_json)
 
 target_link_libraries(${MAIN_EXECUTABLE_NAME} PRIVATE ${MAIN_LIBRARY_NAME})
 
