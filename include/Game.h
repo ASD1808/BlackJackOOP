@@ -21,7 +21,7 @@ private:
     void resolveRound();
 
 public:
-    Game(const std::string& playerName,
+    explicit Game(const std::string& playerName,
          const std::string& deckPath = "assets/deck.json",
          const std::string& rulesPath = "assets/rules.json");
 

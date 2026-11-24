@@ -62,6 +62,9 @@ int main() {
             std::cout << "Hand copy check: " << assignedHand << "\n";
         }
 
+        std::cout << "Last dealer score (" << game.getDealer().getName() << "): "
+                  << game.getDealer().getHand().calculateScore() << "\n";
+
         std::cout << "Deck empty: " << (game.getDeck().isEmpty() ? "yes" : "no") << "\n";
         std::cout << "Final balance for " << game.getPlayer().getName()
                   << ": " << game.getPlayer().getBalance() << "\n";
