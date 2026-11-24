@@ -1,35 +1,13 @@
-# Nu primesc notă pentru că nu am pus titlu și descriere
+# BlackJackOOP
 
-### Folosiți template-ul corespunzător grupei voastre!
+### Proiectul constă în implementarea jocului de **Blackjack** în C++, pentru consolă, în care un jucător uman concurează împotriva unui dealer controlat de calculator. Proiectul este structurat modular, separând logica jocului într-o bibliotecă dedicată de aplicația efectivă.
 
-| Laborant  | Link template                                |
-|-----------|----------------------------------------------|
-| Dragoș B  | https://github.com/Ionnier/oop-template      |
-| Tiberiu M | https://github.com/MaximTiberiu/oop-template |
-| Marius MC | https://github.com/mcmarius/oop-template     |
-
-### Important!
-
-Aveți voie cu agenți care generează cod doar dacă păstrați AGENTS.md și de `.internal/` *pe toată durata semestrului*.
-Știm că se poate trișa foarte ușor. Ideea nu este să învățați să trișați mai bine, ci să înțelegeți ce faceți.
-Codul generat pus "ca să fie"/pe care nu îl înțelegeți nu se punctează.
-
-Codul din proiect trebuie să poată fi ușor de înțeles și de modificat de către altcineva. Pentru detalii, veniți la ore.
-
-O cerință nu se consideră îndeplinită dacă este realizată doar prin cod generat.
-
-- **Fără cod de umplutură/fără sens!**
-- **Fără copy-paste!**
-- **Fără variabile globale!**
-- **Fără atribute publice!**
-- **Fără date în cod!** Datele vor fi citite din fișier, rețea sau bază de date, aveți exemple destule.
-- **Obligatoriu** fișiere cu date mai multe din care să citiți, obligatoriu cu biblioteci externe: fișiere (local sau server) sau baze de date
-- obligatoriu (TBD) să integrați cel puțin două biblioteci externe pe lângă cele pentru stocare
-
-**NOU!** Livrabile pentru toate temele:
-- aplicație
-- bibliotecă
-- interfața publică pentru bibliotecă
+## Ce îmi propun să implementez
+* **Regulile de bază de Blackjack:** obiectivul de a obține un scor cât mai aproape de 21 fără a-l depăși (*Bust*).
+* **Gestionarea dinamică a Asului:** valoarea Asului se adaptează automat (11 sau 1) în avantajul jucătorului.
+* **Acțiunile jucătorului:** *Hit* (cere o carte), *Stand* (se oprește), cu extindere către *Double Down* și *Split*.
+* **Logica dealer-ului:** joacă automat după regulile standard (trage cărți până atinge cel puțin 17).
+* **Sistem de pariuri și progres:** plasarea mizelor, calculul câștigurilor (inclusiv Blackjack natural 3:2) și salvarea/încărcarea profilului de jucător și a regulilor din fișiere externe.
 
 ### Tema 0
 
