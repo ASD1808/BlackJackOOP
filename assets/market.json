@@ -1,0 +1,8 @@
+{
+  "transfer_list": [
+    { "name": "Jadon Sancho", "position": "FWD", "attack": 86, "defense": 42, "stamina": 100, "price": 80000 },
+    { "name": "Alejandro Garnacho", "position": "MID", "attack": 76, "defense": 74, "stamina": 100, "price": 65000 },
+    { "name": "Dani Carvajal", "position": "DEF", "attack": 48, "defense": 85, "stamina": 100, "price": 70000 },
+    { "name": "David de Gea", "position": "GK", "attack": 26, "defense": 87, "stamina": 100, "price": 60000 }
+  ]
+}

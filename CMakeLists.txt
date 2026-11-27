@@ -59,11 +59,11 @@ FetchContent_MakeAvailable(nlohmann_json)
 
 # always STATIC (simpler); TBD if we ever want dynamic for this; BUILD_SHARED_LIBS is for ext deps
 add_library(${MAIN_LIBRARY_NAME} STATIC
-        src/Card.cpp
-        src/Hand.cpp
-        src/Deck.cpp
-        src/Player.cpp
-        src/Game.cpp)
+        src/Footballer.cpp
+        src/Squad.cpp
+        src/Team.cpp
+        src/League.cpp
+)
 
 # NOTE: update EXECUTABLE_NAME in .github/workflows/cmake.yml when changing name here
 add_executable(${MAIN_EXECUTABLE_NAME}

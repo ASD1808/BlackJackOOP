@@ -1,73 +1,95 @@
-#include "Game.h"
+#include "League.h"
+#include <cstddef>
 #include <iostream>
-#include <string>
 
 int main() {
     try {
-        std::string playerName;
-        std::cout << "Enter player name: ";
-        if (!(std::cin >> playerName)) {
-            playerName = "Player1";
-        }
+        League league;
+        std::cout << "Welcome to Mini Football Manager!\n";
+        std::cout << league.getLastReport() << "\n";
 
-        Game game(playerName);
-        std::cout << "Welcome, " << game.getPlayer().getName() << "!\n";
-        std::cout << "Table limits: " << game.getMinBet() << " - " << game.getMaxBet() << "\n";
+        int option = -1;
+        while (option != 0) {
+            std::cout << "\n--- Menu (" << league.getPlayerTeam().getName()
+                      << " | Budget: $" << league.getPlayerTeam().getBudget() << ") ---\n"
+                      << "1. View team & league status\n"
+                      << "2. View transfer market (" << league.getMarketSize() << " available)\n"
+                      << "3. Buy player from market\n"
+                      << "4. Train team (Cost: $" << league.getTrainingCost() << ")\n"
+                      << "5. Rest team\n"
+                      << "6. Play next match" << (league.hasNextMatch() ? "" : " [Season finished]") << "\n"
+                      << "7. View league standings\n"
+                      << "0. Exit\n"
+                      << "Choose an option: ";
 
-        while (game.getPlayer().getBalance() >= game.getMinBet()) {
-            std::cout << "\nCurrent balance: " << game.getPlayer().getBalance() << "\n";
-            std::cout << "Enter bet amount (or 0 to quit): ";
-
-            double bet = 0.0;
-            if (!(std::cin >> bet) || bet == 0.0) {
+            if (!(std::cin >> option)) {
                 break;
             }
 
-            if (!game.startRound(bet)) {
-                std::cout << game.getLastOutcome() << "\n";
-                continue;
-            }
-
-            while (game.isRoundActive()) {
-                std::cout << "\n" << game << "\n";
-                std::cout << "Current bet: " << game.getPlayer().getCurrentBet() << "\n";
-                std::cout << "Choose action - (h)it or (s)tand: ";
-
-                char action = 's';
-                if (!(std::cin >> action)) {
-                    action = 's';
+            switch (option) {
+                case 1:
+                    std::cout << "\n" << league;
+                    break;
+                case 2:
+                    std::cout << "\n";
+                    league.displayMarket(std::cout);
+                    break;
+                case 3: {
+                    league.displayMarket(std::cout);
+                    std::cout << "Enter player number to sign: ";
+                    std::size_t choice = 0;
+                    if (!(std::cin >> choice)) {
+                        option = 0;
+                        break;
+                    }
+                    std::size_t marketIndex = (choice > 0) ? (choice - 1) : league.getMarketSize();
+                    league.buyFromMarket(marketIndex);
+                    std::cout << league.getLastReport() << "\n";
+                    break;
                 }
-
-                if (action == 'h' || action == 'H') {
-                    game.playerHit();
-                } else if (action == 's' || action == 'S') {
-                    game.playerStand();
-                } else {
-                    std::cout << "Invalid choice. Please enter 'h' or 's'.\n";
-                }
+                case 4:
+                    league.trainPlayerTeam();
+                    std::cout << league.getLastReport() << "\n";
+                    break;
+                case 5:
+                    league.restPlayerTeam();
+                    std::cout << league.getLastReport() << "\n";
+                    break;
+                case 6:
+                    league.playNextMatch();
+                    std::cout << "\n" << league.getLastReport() << "\n";
+                    break;
+                case 7:
+                    std::cout << "\n";
+                    league.displayStandings(std::cout);
+                    break;
+                case 0:
+                    std::cout << "Exiting Mini Football Manager.\n";
+                    break;
+                default:
+                    std::cout << "Invalid option. Please try again.\n";
+                    break;
             }
-
-            std::cout << "\n" << game << "\n";
-            std::cout << "Result: " << game.getLastOutcome() << "\n";
         }
 
-        if (game.getPlayer().getHand().getCount() > 0) {
-            const Card& firstCard = game.getPlayer().getHand().getCard(0);
-            std::cout << "\nLast round first card: " << firstCard.getRank()
-                      << " (" << firstCard.getSuit() << ")\n";
+        // Verificare explicita pentru Regula celor 3 (Squad) si metodele de acces
+        const Squad& currentSquad = league.getPlayerTeam().getSquad();
+        if (currentSquad.getCount() > 0) {
+            const Footballer& captain = currentSquad.getPlayer(0);
+            std::cout << "\nTeam captain: " << captain.getName()
+                      << " [" << captain.getPosition() << "] "
+                      << "STA: " << captain.getStamina() << "% "
+                      << "Value: $" << captain.getPrice() << "\n";
 
-            Hand copiedHand(game.getPlayer().getHand());
-            Hand assignedHand;
-            assignedHand = copiedHand;
-            std::cout << "Hand copy check: " << assignedHand << "\n";
+            Squad copiedSquad(currentSquad);
+            Squad assignedSquad;
+            assignedSquad = copiedSquad;
+            std::cout << "Squad copy check (" << assignedSquad.getCount() << " players):\n"
+                      << assignedSquad;
         }
 
-        std::cout << "Last dealer score (" << game.getDealer().getName() << "): "
-                  << game.getDealer().getHand().calculateScore() << "\n";
-
-        std::cout << "Deck empty: " << (game.getDeck().isEmpty() ? "yes" : "no") << "\n";
-        std::cout << "Final balance for " << game.getPlayer().getName()
-                  << ": " << game.getPlayer().getBalance() << "\n";
+        std::cout << "\nFinal standings:\n";
+        league.displayStandings(std::cout);
 
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << "\n";

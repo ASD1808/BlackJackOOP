@@ -1,0 +1,48 @@
+{
+  "win_reward": 50000,
+  "draw_reward": 20000,
+  "training_cost": 15000,
+  "max_squad_size": 8,
+  "player_team": {
+    "name": "Arsenal FC",
+    "budget": 150000,
+    "players": [
+      { "name": "David Raya", "position": "GK", "attack": 25, "defense": 78, "stamina": 100, "price": 40000 },
+      { "name": "Gabriel", "position": "DEF", "attack": 42, "defense": 76, "stamina": 100, "price": 45000 },
+      { "name": "Martin Odegaard", "position": "MID", "attack": 68, "defense": 65, "stamina": 100, "price": 55000 },
+      { "name": "Kay Havertz", "position": "FWD", "attack": 80, "defense": 38, "stamina": 100, "price": 65000 }
+    ]
+  },
+  "opponents": [
+    {
+      "name": "Tottenham Hotspurs",
+      "budget": 120000,
+      "players": [
+        { "name": "Kinsky Antonin", "position": "GK", "attack": 22, "defense": 72, "stamina": 100, "price": 35000 },
+        { "name": "Pedro Porro", "position": "DEF", "attack": 38, "defense": 70, "stamina": 100, "price": 40000 },
+        { "name": "Sandro Tonali", "position": "MID", "attack": 62, "defense": 60, "stamina": 100, "price": 48000 },
+        { "name": "Solankie Dominic", "position": "FWD", "attack": 74, "defense": 35, "stamina": 100, "price": 55000 }
+      ]
+    },
+    {
+      "name": "FC Barcelona",
+      "budget": 180000,
+      "players": [
+        { "name": "Joan Garcia", "position": "GK", "attack": 28, "defense": 79, "stamina": 100, "price": 45000 },
+        { "name": "Pau Cubarsi", "position": "DEF", "attack": 45, "defense": 77, "stamina": 100, "price": 50000 },
+        { "name": "Pedri Gonzalez", "position": "MID", "attack": 72, "defense": 68, "stamina": 100, "price": 60000 },
+        { "name": "Raphinha", "position": "FWD", "attack": 82, "defense": 40, "stamina": 100, "price": 70000 }
+      ]
+    },
+    {
+      "name": "AC Milan",
+      "budget": 220000,
+      "players": [
+        { "name": "Mike Maignan", "position": "GK", "attack": 30, "defense": 84, "stamina": 100, "price": 55000 },
+        { "name": "Fikayo Tomori", "position": "DEF", "attack": 50, "defense": 82, "stamina": 100, "price": 62000 },
+        { "name": "Luka Modric", "position": "MID", "attack": 78, "defense": 74, "stamina": 100, "price": 75000 },
+        { "name": "Goncalo Ramos", "position": "FWD", "attack": 88, "defense": 44, "stamina": 100, "price": 85000 }
+      ]
+    }
+  ]
+}

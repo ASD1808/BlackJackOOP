@@ -1,13 +1,12 @@
-# BlackJackOOP
+# Football Manager
 
-### Proiectul constă în implementarea jocului de **Blackjack** în C++, pentru consolă, în care un jucător uman concurează împotriva unui dealer controlat de calculator. Proiectul este structurat modular, separând logica jocului într-o bibliotecă dedicată de aplicația efectivă.
+**Football Manager** este un simulator de management sportiv în consolă, dezvoltat în C++. Utilizatorul preia conducerea unei echipe de fotbal și concurează într-un campionat împotriva altor cluburi, gestionând lotul, bugetul, transferurile, antrenamentele și nivelul de oboseală al jucătorilor.
 
-## Ce îmi propun să implementez
-* **Regulile de bază de Blackjack:** obiectivul de a obține un scor cât mai aproape de 21 fără a-l depăși (*Bust*).
-* **Gestionarea dinamică a Asului:** valoarea Asului se adaptează automat (11 sau 1) în avantajul jucătorului.
-* **Acțiunile jucătorului:** *Hit* (cere o carte), *Stand* (se oprește), cu extindere către *Double Down* și *Split*.
-* **Logica dealer-ului:** joacă automat după regulile standard (trage cărți până atinge cel puțin 17).
-* **Sistem de pariuri și progres:** plasarea mizelor, calculul câștigurilor (inclusiv Blackjack natural 3:2) și salvarea/încărcarea profilului de jucător și a regulilor din fișiere externe.
+### Funcționalități principale
+- **Gestionarea lotului și a bugetului:** vizualizarea echipei, a rating-urilor efective de atac/apărare (calculate în funcție de post și de rezistență) și a bugetului disponibil.
+- **Piața de transferuri:** achiziționarea de jucători noi, în limita bugetului și a dimensiunii maxime a lotului.
+- **Antrenament și recuperare:** sesiuni de antrenament contra cost care îmbunătățesc atributele jucătorilor (scăzând `stamina`), precum și odihna lotului pentru refacere.
+- **Simularea etapelor și clasament:** simularea meciurilor pe baza rating-urilor efective, acordarea premiilor financiare, actualizarea punctelor și a golaverajului și afișarea clasamentului sortat.
 
 ### Tema 0
 
